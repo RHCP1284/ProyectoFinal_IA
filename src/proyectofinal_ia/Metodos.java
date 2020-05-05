@@ -4,6 +4,7 @@ package proyectofinal_ia;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,6 +12,8 @@ import java.util.Scanner;
 public class Metodos {
     
     //Listas que contendran los campos de las mejores 5000 peliculas segun IMDB    
+    
+    
         public ArrayList<String> color = new ArrayList<>();
         public ArrayList<String> director_nameName = new ArrayList<>();
         public ArrayList<String> num_critic_for_reviews = new ArrayList<>();
@@ -20,7 +23,7 @@ public class Metodos {
         public ArrayList<String> actor_2_name = new ArrayList<>();
         public ArrayList<String> actor_1_facebook_likesNumber = new ArrayList<>();
         public ArrayList<String> gross = new ArrayList<>();
-        public ArrayList<String> genres = new ArrayList<>();
+        public ArrayList< ArrayList<String> > genres = new ArrayList<>();
         public ArrayList<String> actor_1_namePrimary = new ArrayList<>();
         public ArrayList<String> movie_title = new ArrayList<>();
         public ArrayList<String> num_voted_users = new ArrayList<>();
@@ -40,11 +43,12 @@ public class Metodos {
         public ArrayList<String> aspect_ratio = new ArrayList<>();
         public ArrayList<String> movie_facebook_likes = new ArrayList<>();
         
+        
         public ArrayList<String> Sugerencias = new ArrayList<>();
         public ArrayList<String> Catalogo = new ArrayList<>();
         public ArrayList<String> Pesos = new ArrayList<>();
         
-    public void LeerArchivo()
+   public void LeerArchivo()
     {
        String Path = "src/proyectofinal_ia/movie_metadata.csv";
         File file = new File(Path);
@@ -96,8 +100,8 @@ public class Metodos {
                    case 7: actor_2_name.add(tempo); break;
                    case 8:actor_1_facebook_likesNumber.add(tempo); break;
                    case 9: gross.add(tempo); break;
-                   case 10:genres.add(tempo.toLowerCase());break;
-                   case 11: actor_1_namePrimary.add(tempo.toLowerCase());  break;
+                   case 10:ArrayList<String> SubGeneros = new ArrayList<>(); tempo = tempo.replace("|", ","); String[] s = tempo.split(","); for(String d:s){ SubGeneros.add(d.toLowerCase());} genres.add(SubGeneros); break;
+                   case 11: actor_1_namePrimary.add(tempo.toLowerCase());                           
                    case 12: movie_title.add(tempo); break;
                    case 13: num_voted_users.add(tempo); break;
                    case 14: cast_total_facebook_likes.add(tempo); break;
@@ -125,7 +129,7 @@ public class Metodos {
        
    }
    
-      private double redondearDecimales(double valorInicial, int numeroDecimales) {
+   private double redondearDecimales(double valorInicial, int numeroDecimales) {
         double parteEntera, resultado;
         resultado = valorInicial;
         parteEntera = Math.floor(resultado);
@@ -134,8 +138,7 @@ public class Metodos {
         resultado=(resultado/Math.pow(10, numeroDecimales))+parteEntera;
         return resultado;
     }
-    
-   public void DesignarPesosCampos(ArrayList<ArrayList<String>> Campos,ArrayList<String>genres1,ArrayList<String>director_nameName1,ArrayList<String>title_year1,ArrayList<String>country1,ArrayList<String>actor_1_namePrimary1)
+ public void DesignarPesosCampos(ArrayList<ArrayList<String>> Campos,ArrayList<ArrayList<String>>genres1,ArrayList<String>director_nameName1,ArrayList<String>title_year1,ArrayList<String>country1,ArrayList<String>actor_1_namePrimary1)
    {                      
        double probabilidad = 1;
        int c = 0;
@@ -151,7 +154,8 @@ public class Metodos {
                       s = s.toLowerCase();
                       if(s.equals("")) {s ="null";}
                     
-                    if(genres1.get(i).contains(s)) {
+                      ArrayList<String> subs = genres.get(i);
+                    if(subs.contains(s)) {
                          probabilidad = probabilidad * 0.35; 
                      } 
                      
@@ -183,6 +187,9 @@ public class Metodos {
        DefinirMinimos();
        
        }
+   
+ 
+   
                  
    private void DefinirMinimos()
    {
@@ -230,7 +237,9 @@ public class Metodos {
         Catalogo.add(newitem);
        }
                       
+       int x =0;
       }
+       
        
       
     private Double Minimos (ArrayList lista, int n){
