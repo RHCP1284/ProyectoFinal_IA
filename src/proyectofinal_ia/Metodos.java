@@ -48,6 +48,8 @@ public class Metodos {
         public ArrayList<String> Catalogo = new ArrayList<>();
         public ArrayList<String> Pesos = new ArrayList<>();
         
+        
+        
    public void LeerArchivo()
     {
        String Path = "src/proyectofinal_ia/movie_metadata.csv";
@@ -138,6 +140,7 @@ public class Metodos {
         resultado=(resultado/Math.pow(10, numeroDecimales))+parteEntera;
         return resultado;
     }
+   
  public void DesignarPesosCampos(ArrayList<ArrayList<String>> Campos,ArrayList<ArrayList<String>>genres1,ArrayList<String>director_nameName1,ArrayList<String>title_year1,ArrayList<String>country1,ArrayList<String>actor_1_namePrimary1)
    {                      
        double probabilidad = 1;
@@ -186,10 +189,7 @@ public class Metodos {
        
        DefinirMinimos();
        
-       }
-   
- 
-   
+       }       
                  
    private void DefinirMinimos()
    {
@@ -240,7 +240,8 @@ public class Metodos {
        int x =0;
       }
        
-       
+   
+   
       
     private Double Minimos (ArrayList lista, int n){
         ArrayList<String> sortedlist = new ArrayList<>(lista); 
