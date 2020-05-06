@@ -118,7 +118,7 @@ public class Metodos {
                    case 23: budget.add(tempo); break;
                    case 24: title_year.add(tempo); break;
                    case 25: actor_2_facebook_likes.add(tempo); break;
-                   case 26: imdb_score.add(tempo); break;
+                   case 26: if(tempo.equals("empty")) {tempo = "0";} if(tempo.equals("")) {tempo = "0";}  double n = Double.parseDouble(tempo); if(n >10){n = 1;} imdb_score.add(n+""); break;
                    case 27: aspect_ratio.add(tempo);break;
                    
                }
@@ -157,7 +157,7 @@ public class Metodos {
                       s = s.toLowerCase();
                       if(s.equals("")) {s ="null";}
                     
-                      ArrayList<String> subs = genres.get(i);
+                      ArrayList<String> subs = genres1.get(i);
                     if(subs.contains(s)) {
                          probabilidad = probabilidad * 0.35; 
                      } 
@@ -240,15 +240,26 @@ public class Metodos {
        int x =0;
       }
        
-   
-   
-      
+            
     private Double Minimos (ArrayList lista, int n){
         ArrayList<String> sortedlist = new ArrayList<>(lista); 
         Collections.sort(sortedlist); 
         double valor = Double.parseDouble(sortedlist.get(n));
         return valor;
     }
+    
+    public ArrayList<String> Almacenar(String campo)
+    {
+        ArrayList<String> retornar = new ArrayList<>();
+        String[] tempo = campo.split(",");
+        for(String s: tempo)
+        {
+            retornar.add(s);
+        }
+        return retornar;
+    }
+    
+    
        
    
    }
