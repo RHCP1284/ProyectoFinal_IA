@@ -233,13 +233,8 @@ public class Frame_Interaccion extends javax.swing.JFrame {
         ArrayList<String> Nuevo = m.Catalogo;
         Imprimir(Nuevo,m.movie_title,m.director_nameName,m.title_year,m.genres,m.duration,m.imdb_score);
         ArrayList<String> Probar = new ArrayList<>();
-        
-        Probar.add("(1.) "+pais);
-        Probar.add("(2.) "+genero);
-        Probar.add("(3.) "+año);
-        Probar.add("(4.) "+director);
-        Probar.add("(5.) "+actor);      
-        
+        Probar.add(m.Sugerencias.toString());
+                                                        
         String ruta = "src/ProyectoFinal_IA/Recomendaciones.txt";
         File file = new File(ruta);
         String rutaCompleta = file.getAbsolutePath();
@@ -258,8 +253,7 @@ public class Frame_Interaccion extends javax.swing.JFrame {
         }
         else
         {
-           ArrayList<String> Doc = m.LeerData();           
-           Doc.add("\n");
+           ArrayList<String> Doc = m.LeerData();                      
            for(String s:Probar)
            {               
                Doc.add(s);

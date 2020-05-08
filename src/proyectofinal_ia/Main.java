@@ -23,6 +23,7 @@ public class Main extends javax.swing.JFrame {
     
 
     public Metodos m = new Metodos();
+    public ArrayList<String> Recomendaciones = new ArrayList<>();
                          
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -223,12 +224,7 @@ public class Main extends javax.swing.JFrame {
     
     private void ArranqueEnFrioData() throws FileNotFoundException, IOException
     {
-        ArrayList<String> Generos = new ArrayList<>();
-        ArrayList<String> Directores = new ArrayList<>();
-        ArrayList<String> Años = new ArrayList<>();
-        ArrayList<String> Actores = new ArrayList<>();
-        ArrayList<String> Paises = new ArrayList<>();
-                      
+                              
         String ruta = "src/ProyectoFinal_IA/Recomendaciones.txt";
         File file = new File(ruta);
         String rutaCompleta = file.getAbsolutePath();
@@ -243,85 +239,21 @@ public class Main extends javax.swing.JFrame {
         
         // Lectura del fichero                        
         String linea;
-        ArrayList<String> Recomendaciones = new ArrayList<>();
-                
-        /*        
+ 
         while((linea=br.readLine())!=null)
-        {                    
-        if(linea.startsWith("(4.)")){linea = linea.replace("(4.)", ""); Directores = m.Almacenar(linea.substring(1,linea.length()));  }
-        if(linea.startsWith("(5.)")){linea = linea.replace("(5.)", ""); Actores = m.Almacenar(linea.substring(1,linea.length()));}
-        if(linea.startsWith("(2.)")){linea = linea.replace("(2.)", ""); Generos = m.Almacenar(linea.substring(1,linea.length()));}                
-        if(linea.startsWith("(1.)")){linea = linea.replace("(1.)", ""); Paises = m.Almacenar(linea.substring(1,linea.length())); }
-        if(linea.startsWith("(3.)")){linea = linea.replace("(3.)", ""); Años = m.Almacenar(linea.substring(1,linea.length())); }                
+        {                                       
+         Algortimo(linea);                               
         }        
-        */
+
         
-        ArrayList<String> Nuevo = new ArrayList<String>();
-        
-        while((linea=br.readLine())!=null)
-        {            
-            if(linea.startsWith("(1.)")) 
-            {          
-                linea = linea.replace("(1.)", "");
-                Paises = m.Almacenar(linea.substring(1,linea.length()));
-            }
-            
-            if(linea.startsWith("(2.)")) 
-            {
-                linea = linea.replace("(2.)", "");
-                Generos = m.Almacenar(linea.substring(1,linea.length()));
-            }
-            
-            if(linea.startsWith("(3.)")) 
-            {
-                linea = linea.replace("(3.)", "");
-                Años = m.Almacenar(linea.substring(1,linea.length()));
-            }
-            
-            if(linea.startsWith("(4.)")) 
-            {
-                linea = linea.replace("(4.)", "");
-                Directores = m.Almacenar(linea.substring(1,linea.length()));
-            }
-            
-            if(linea.startsWith("(5.)")) 
-            {
-                linea = linea.replace("(5.)", "");
-                Actores = m.Almacenar(linea.substring(1,linea.length()));
-                ArrayList<ArrayList<String> > Campos = new ArrayList<>();
-                Campos.add(Generos);
-                Campos.add(Directores);
-                Campos.add(Años);
-                Campos.add(Actores);
-                Campos.add(Paises);                
-                m.DesignarPesosCampos(Campos,m.genres,m.director_nameName,m.title_year,m.country,m.actor_1_namePrimary);                
-                ArrayList<String> tempo =  m.Catalogo;
-                
-                for(String s: tempo)
-                {
-                    if(!Nuevo.contains(s))
-                    {
-                    Nuevo.add(s);
-                    }
-                }
-               
-                Actores.clear();           
-                Generos.clear();
-                Años.clear();
-                Paises.clear();
-                Directores.clear();                
-            }
-                    
-        }
-       
         int v = 0;
-        if(Nuevo.size() > 10) {v = 10; } else {v = Nuevo.size();}
+        if(Recomendaciones.size() > 10) {v = 10; } else {v = Recomendaciones.size();}
         ArrayList<String> Mostrar = new ArrayList<>();
         
         for (int i = 0; i < v; i++) 
         {
               Random rand = new Random();
-              String newitem = Nuevo.get(rand.nextInt(Nuevo.size()));
+              String newitem = Recomendaciones.get(rand.nextInt(Recomendaciones.size()));
               
             while(true)
             {
@@ -332,13 +264,12 @@ public class Main extends javax.swing.JFrame {
                 }
                 else
                 {
-                    newitem = Nuevo.get(rand.nextInt(Nuevo.size()));
+                    newitem = Recomendaciones.get(rand.nextInt(Recomendaciones.size()));
                 }
             }
         }
         
         Imprimir(Mostrar,m.movie_title,m.director_nameName,m.title_year,m.genres,m.duration,m.imdb_score);
-        
     }
             
     public void Imprimir(ArrayList<String> Lista,ArrayList<String> Nombre,ArrayList<String> Director,ArrayList<String> Año,ArrayList<ArrayList<String>> Genero,ArrayList<String> pais,ArrayList<String> idioma)
@@ -362,8 +293,26 @@ public class Main extends javax.swing.JFrame {
         
         
     }
- 
-
+    
+    public void Algortimo(String cadena)
+    {       
+                                          
+         cadena = cadena.replace(" ", "");
+         cadena = cadena.replace("[", "");
+         cadena = cadena.replace("]", "");
+         String[] c = cadena.split(",");
+         
+         
+         for(String s:c)
+         {
+             if(!Recomendaciones.contains(s))
+             {
+         Recomendaciones.add(s);
+             }
+                 }
+        
+    }
+         
            
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
