@@ -52,19 +52,40 @@ public class Metodos {
         
    public void LeerArchivo()
     {
-       String Path = "src/proyectofinal_ia/movie_metadata.csv";
+        String Path = "src/proyectofinal_ia/movie_metadata.csv";
         File file = new File(Path);
-        String absolutePath = file.getAbsolutePath(); 
-        
-        
+        String absolutePath = file.getAbsolutePath();                
         int c =0;
+        
         try {
             Scanner input = new Scanner(new File(absolutePath));
             while (input.hasNextLine()) {
                 String line = input.nextLine();
                 if(c >0)
                 {ClasificarCampos(line);}
-                c++;
+                c++;                
+            }
+            input.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+                
+    }
+   
+   public ArrayList<String> LeerData()
+    {
+        
+        ArrayList<String> n = new ArrayList<>();
+        String Path = "src/proyectofinal_ia/Recomendaciones.txt";
+        File file = new File(Path);
+        String absolutePath = file.getAbsolutePath();         
+        
+        int c =0;
+        try {
+            Scanner input = new Scanner(new File(absolutePath));
+            while (input.hasNextLine()) {
+                String line = input.nextLine();
+                n.add(line);
                 
             }
             input.close();
@@ -72,7 +93,7 @@ public class Metodos {
             ex.printStackTrace();
         }
         
-        int j=0;
+        return n;
     }
     
    private void ClasificarCampos(String linea)

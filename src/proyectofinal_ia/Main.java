@@ -223,7 +223,6 @@ public class Main extends javax.swing.JFrame {
     
     private void ArranqueEnFrioData() throws FileNotFoundException, IOException
     {
-        
         ArrayList<String> Generos = new ArrayList<>();
         ArrayList<String> Directores = new ArrayList<>();
         ArrayList<String> Años = new ArrayList<>();
@@ -240,45 +239,115 @@ public class Main extends javax.swing.JFrame {
         archivo = new File (rutaCompleta);
         fr = new FileReader (archivo);
         br = new BufferedReader(fr);
-
-        // Lectura del fichero
+                
+        
+        // Lectura del fichero                        
         String linea;
-        while((linea=br.readLine())!=null){
-            int i =0;
+        ArrayList<String> Recomendaciones = new ArrayList<>();
+                
+        /*        
+        while((linea=br.readLine())!=null)
+        {                    
         if(linea.startsWith("(4.)")){linea = linea.replace("(4.)", ""); Directores = m.Almacenar(linea.substring(1,linea.length()));  }
         if(linea.startsWith("(5.)")){linea = linea.replace("(5.)", ""); Actores = m.Almacenar(linea.substring(1,linea.length()));}
         if(linea.startsWith("(2.)")){linea = linea.replace("(2.)", ""); Generos = m.Almacenar(linea.substring(1,linea.length()));}                
-        if(linea.startsWith("(1.)")){linea = linea.replace("(1.)", ""); Paises = m.Almacenar(linea.substring(1,linea.length()));}
-        if(linea.startsWith("(3.)")){linea = linea.replace("(3.)", ""); Años = m.Almacenar(linea.substring(1,linea.length())); }
+        if(linea.startsWith("(1.)")){linea = linea.replace("(1.)", ""); Paises = m.Almacenar(linea.substring(1,linea.length())); }
+        if(linea.startsWith("(3.)")){linea = linea.replace("(3.)", ""); Años = m.Almacenar(linea.substring(1,linea.length())); }                
+        }        
+        */
+        
+        ArrayList<String> Nuevo = new ArrayList<String>();
+        
+        while((linea=br.readLine())!=null)
+        {            
+            if(linea.startsWith("(1.)")) 
+            {          
+                linea = linea.replace("(1.)", "");
+                Paises = m.Almacenar(linea.substring(1,linea.length()));
+            }
+            
+            if(linea.startsWith("(2.)")) 
+            {
+                linea = linea.replace("(2.)", "");
+                Generos = m.Almacenar(linea.substring(1,linea.length()));
+            }
+            
+            if(linea.startsWith("(3.)")) 
+            {
+                linea = linea.replace("(3.)", "");
+                Años = m.Almacenar(linea.substring(1,linea.length()));
+            }
+            
+            if(linea.startsWith("(4.)")) 
+            {
+                linea = linea.replace("(4.)", "");
+                Directores = m.Almacenar(linea.substring(1,linea.length()));
+            }
+            
+            if(linea.startsWith("(5.)")) 
+            {
+                linea = linea.replace("(5.)", "");
+                Actores = m.Almacenar(linea.substring(1,linea.length()));
+                ArrayList<ArrayList<String> > Campos = new ArrayList<>();
+                Campos.add(Generos);
+                Campos.add(Directores);
+                Campos.add(Años);
+                Campos.add(Actores);
+                Campos.add(Paises);                
+                m.DesignarPesosCampos(Campos,m.genres,m.director_nameName,m.title_year,m.country,m.actor_1_namePrimary);                
+                ArrayList<String> tempo =  m.Catalogo;
+                
+                for(String s: tempo)
+                {
+                    if(!Nuevo.contains(s))
+                    {
+                    Nuevo.add(s);
+                    }
+                }
+               
+                Actores.clear();           
+                Generos.clear();
+                Años.clear();
+                Paises.clear();
+                Directores.clear();                
+            }
+                    
+        }
+       
+        
+        ArrayList<String> Mostrar = new ArrayList<>();
+        
+        for (int i = 0; i < 10; i++) 
+        {
+              Random rand = new Random();
+              String newitem = Nuevo.get(rand.nextInt(Nuevo.size()));
+              
+            while(true)
+            {
+                if(!Mostrar.contains(newitem))
+                {
+                    Mostrar.add(newitem);
+                    break;
+                }
+                else
+                {
+                    newitem = Nuevo.get(rand.nextInt(Nuevo.size()));
+                }
+            }
         }
         
-        ArrayList<ArrayList<String> > Campos = new ArrayList<>();
-        Campos.add(Generos);
-        Campos.add(Directores);
-        Campos.add(Años);
-        Campos.add(Actores);
-        Campos.add(Paises);
-        
-        m.DesignarPesosCampos(Campos,m.genres,m.director_nameName,m.title_year,m.country,m.actor_1_namePrimary);
-        ArrayList<String> Nuevo = m.Catalogo;
-        Imprimir(Nuevo,m.movie_title,m.director_nameName,m.title_year,m.genres,m.duration,m.imdb_score);
+        Imprimir(Mostrar,m.movie_title,m.director_nameName,m.title_year,m.genres,m.duration,m.imdb_score);
         
     }
-    
-    
-    
-    
-
- public void Imprimir(ArrayList<String> Lista,ArrayList<String> Nombre,ArrayList<String> Director,ArrayList<String> Año,ArrayList<ArrayList<String>> Genero,ArrayList<String> pais,ArrayList<String> idioma)
+            
+    public void Imprimir(ArrayList<String> Lista,ArrayList<String> Nombre,ArrayList<String> Director,ArrayList<String> Año,ArrayList<ArrayList<String>> Genero,ArrayList<String> pais,ArrayList<String> idioma)
     {        
         DefaultTableModel tabla = (DefaultTableModel) tblScanner.getModel();
         ArrayList<String> sortedlist = new ArrayList<>(Lista); 
         Collections.sort(sortedlist); 
-        
-        
+                
         for (int i = 0; i < sortedlist.size(); i++) 
-        {
-            
+        {            
             int d = Integer.parseInt(sortedlist.get(i));
             ArrayList<String> subs = Genero.get(d);
             String v = subs.toString();       

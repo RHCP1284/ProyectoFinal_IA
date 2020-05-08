@@ -240,19 +240,44 @@ public class Frame_Interaccion extends javax.swing.JFrame {
         Probar.add("(4.) "+director);
         Probar.add("(5.) "+actor);      
         
-        
-        
+        String ruta = "src/ProyectoFinal_IA/Recomendaciones.txt";
+        File file = new File(ruta);
+        String rutaCompleta = file.getAbsolutePath();
+        File archivo = new File(rutaCompleta);
+          
+        if(!archivo.exists()) 
+        {                                  
+            try 
+            {
+                CrearArchivo(Probar,0);
+            } 
+            catch (IOException ex) 
+            {                
+                Logger.getLogger(Frame_Interaccion.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+        }
+        else
+        {
+           ArrayList<String> Doc = m.LeerData();           
+           Doc.add("\n");
+           for(String s:Probar)
+           {               
+               Doc.add(s);
+           }
             try {
-                CrearArchivo(Probar);
+                CrearArchivo(Doc,1);
             } catch (IOException ex) {
                 Logger.getLogger(Frame_Interaccion.class.getName()).log(Level.SEVERE, null, ex);
             }
+           
+            
+        }
         
         }
         
     }//GEN-LAST:event_btn_RecomendacionActionPerformed
 
-    public void CrearArchivo (ArrayList<String> lista) throws IOException {
+    public void CrearArchivo (ArrayList<String> lista,int cond) throws IOException {
  
         String ruta = "src/ProyectoFinal_IA/Recomendaciones.txt";
         File file = new File(ruta);
@@ -262,12 +287,13 @@ public class Frame_Interaccion extends javax.swing.JFrame {
         BufferedWriter bw;
         
             bw = new BufferedWriter(new FileWriter(archivo));
-            for (int i = 0; i < lista.size(); i++) {
-              bw.write(lista.get(i)+"\n");  
+            for (int i = 0; i < lista.size(); i++) {                
+              bw.write(lista.get(i)+"\n");                
             }
         
         bw.close();
     }
+            
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DefaultTableModel dm = (DefaultTableModel)tblScanner.getModel();
@@ -310,9 +336,6 @@ public class Frame_Interaccion extends javax.swing.JFrame {
         }
         
     }
-    
-    
-    
     
     
     public static void main(String args[]) {
